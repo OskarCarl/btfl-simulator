@@ -1,6 +1,6 @@
 import tensorflow as tf
 from keras import layers
-from ..peer import config, peer
+from peer import config, peer
 from . import play, dataset
 from . import statistics as s
 import logging
@@ -14,7 +14,7 @@ class App:
 		logger.info("TensorFlow version: {}".format(tf.__version__))
 		# tf.debugging.experimental.enable_dump_debug_info('logs/', tensor_debug_mode="FULL_HEALTH", circular_buffer_size=-1)
 
-		d = dataset.Get(f)
+		d = dataset.GetDataset(f)
 		peers: list[peer.Peer] = []
 		for i in range(config.NUM_PEERS):
 			peers.append(peer.Peer(i, d[i], buildModel()))
@@ -41,20 +41,3 @@ class App:
 		ws = s.CollectWeights(self.e.peers)
 		avgDiff = s.PerLayerAvgWeightDiff(ws)
 		print(avgDiff)
-
-def buildModel() -> tf.keras.Model:
-	inputs = tf.keras.Input(shape=(28,28))
-	flatten = layers.Flatten()(inputs)
-	hidden = layers.Dense(128, activation='relu')(flatten)
-	outputs = layers.Dense(10)(hidden)
-
-	model = tf.keras.models.Model(inputs=inputs, outputs=outputs)
-	model.compile(
-		optimizer=tf.keras.optimizers.SGD(
-			learning_rate=config.LEARNING_RATE,
-			momentum=config.SGD_MOMENTUM
-		),
-		loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-		metrics=['accuracy'])
-
-	return model

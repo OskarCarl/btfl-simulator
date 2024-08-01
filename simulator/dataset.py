@@ -1,11 +1,11 @@
-from . import config, structs
+from peer import config, structs
 import tensorflow as tf
 import numpy as np
 import logging
 
-logger = logging.getLogger('sim.data')
+logger = logging.getLogger('data')
 
-def Get(storedfile=None) -> list[structs.Data]:
+def GetDataset(storedfile=None) -> list[structs.Data]:
 	d: list[structs.Data] = []
 	if storedfile is not None:
 		loaded = np.load(storedfile)

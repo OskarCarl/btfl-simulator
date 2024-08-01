@@ -5,18 +5,22 @@ from typing import Callable
 
 from math import ceil
 from . import config, structs
+from .pick_strategy import *
 
 class Peer:
 	id: int
 	data: structs.Data
 	time: int
-	neighbours: list[Peer]
+	tr = None
+	swarm: dict[int, list[int]]
+	neighbours: list
+	picker: PickStrategy
 	model: tf.keras.Model
 	rng: dict[str, np.random.Generator]
 	epoch: Callable[[np.ndarray, np.ndarray], None]
 	logger: logging.Logger
 
-	def __init__(self, n: int, d: structs.Data, m: tf.keras.Model):
+	def __init__(self, n: int, tr, d: structs.Data, m: tf.keras.Model, l: logging.Logger):
 		self.id = n
 		self.time = 0
 		self.data = d
@@ -25,8 +29,10 @@ class Peer:
 			'x': np.random.default_rng(seed=42),
 			'y': np.random.default_rng(seed=42)
 		}
+		self.tr = tr
 		self.neighbours = []
-		# self.logger = logging.getLogger('peer') # TODO: add logging
+		self.logger = l
+		self.picker = LowStrategy()
 
 		def epoch(x: np.ndarray, y: np.ndarray):
 			trainable_vars = self.model.trainable_variables
@@ -39,11 +45,21 @@ class Peer:
 					loss = self.model.compute_loss(y=y, y_pred=y_pred)
 
 					# Compute gradients
-					gradients = tape.gradient(loss, trainable_vars)
-					self.model.optimizer
-						.apply_gradients(zip(gradients, trainable_vars)) # type: ignore
+					gradients = tape.gradient(loss, trainable_vars) # type: ignore
+					self.model.optimizer.apply_gradients(zip(gradients, trainable_vars)) # type: ignore
 			train(x_shuf, y_shuf)
 		self.epoch = epoch
+
+	def RotateNeighbours(self, n: int):
+		assert n <= config.NUM_NEIGHBOURS
+		assert self.tr is not None
+		self.swarm = self.tr.Announce(self)
+		if len(self.neighbours) == config.NUM_NEIGHBOURS:
+			self.neighbours = self.neighbours[n:]
+		new_neighbours = self.picker.Pick(self.swarm, n)
+		for n in new_neighbours:
+			self.neighbours.append(self.tr.GetPeer(n))
+		self.logger.info("Peer {} rotated; new neighbours: {}".format(self.id, new_neighbours))
 
 	def Communicate(self):
 		u = structs.Update(
@@ -52,10 +68,12 @@ class Peer:
 			tf.zeros_like(self.model.get_weights())
 		)
 		for n in self.neighbours:
-			# self.logger.info("Peer {} sending update to {}".format(self.id, n.id))
+			self.logger.info("Peer {} sending update to {}".format(self.id, n.id))
 			n.OnReceiveModel(u)
 
 	def OnReceiveModel(self, u: structs.Update):
+		assert self.tr is not None
+		self.swarm = self.tr.Announce(self)
 		# TODO: actually apply the update
 		#self.model.
 		if config.RETRAIN_FACTOR > 0.0:
@@ -78,7 +96,7 @@ class Peer:
 			verbose=0,
 			return_dict=True
 		)
-		# self.logger.info("peer {}; time {}; metrics: {}".format(self.id, self.time, metrics))
+		self.logger.info("peer {}; time {}; metrics: {}".format(self.id, self.time, metrics))
 
 	# def getCallback(self) -> tf.keras.callbacks.TensorBoard:
 	# 	logpath = "logs/fit/{}-peer{}".format(

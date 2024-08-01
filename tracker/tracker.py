@@ -1,21 +1,20 @@
 from logging import Logger
-from ..peer import peer
+
+import peer
+from .swarm import Swarm
 
 class Tracker:
-	swarm: dict[int, peer.Peer]
-	swarm_quick: dict[int, int]
+	swarm: Swarm
 	logger: Logger
 
 	def __init__(self, logger: Logger):
 		self.logger = logger
-		self.swarm = {}
-		self.swarm_quick = {}
+		self.s = Swarm()
 
-	def Announce(self, peer: peer.Peer) -> dict[int, int]:
-		self.swarm[peer.id] = peer
-		self.swarm_quick[peer.id] = peer.time
-		self.logger.info("Announced {}".format(peer))
-		return self.swarm_quick
+	def Announce(self, p: peer.Peer) -> dict[int, list[int]]:
+		self.s.Add(p)
+		self.logger.info("Announced {}".format(p))
+		return self.s.GetQuickList(p.time, p.id)
 
 	def GetPeer(self, id: int) -> peer.Peer:
-		return self.swarm[id]
+		return self.s.Get(id)

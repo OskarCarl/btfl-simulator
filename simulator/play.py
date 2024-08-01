@@ -1,6 +1,6 @@
 import csv
 
-from ..peer import peer, config, structs
+from peer import peer, config, structs
 import logging, sys
 
 logger = logging.getLogger('sim.play')
@@ -41,33 +41,15 @@ class FitStep(Step):
 		self.actor.Fit()
 
 class CommunicateStep(Step):
-	source: int
-	start: int = 0
-	stop: int = peer.EPOCHS
-
-	def __init__(self, actor: peer.Peer | None, source: int, start: int, stop: int):
-		assert actor is not None
-		assert start is not None
-		assert stop is not None
-		self.actor = actor
-		self.source = source
-		if start != None:
-			self.start = start
-		if stop != None:
-			self.stop = stop
-
 	def __str__(self) -> str:
 		assert self.actor is not None
-		return "Peer {} applying update range [{}, {}) from peer {}".format(
+		return "Peer {} sending updates to neighbours".format(
 			self.actor.id,
-			self.start,
-			self.stop,
-			self.source
 		)
 
 	def Exec(self, e: Executor):
 		assert self.actor is not None
-
+		self.actor.Communicate()
 
 class ClockStep(Step):
 	def __init__(self):
