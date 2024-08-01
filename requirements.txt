@@ -1,5 +1,6 @@
 matplotlib
 numpy
 tensorboard
-tensorflow
+tensorflow==2.16.*
+types-tensorflow==2.16.*
 tornado

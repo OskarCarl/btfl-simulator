@@ -1,17 +1,15 @@
 import csv
 
-from . import peer, config, structs
+from ..peer import peer, config, structs
 import logging, sys
 
 logger = logging.getLogger('sim.play')
 
 class Executor:
 	peers: list[peer.Peer]
-	updates: list[list[structs.Update]] # Peer number -> Update number -> Gradients
 
 	def __init__(self, peers: list[peer.Peer]):
 		self.peers = peers
-		self.updates = [[] for x in range(len(peers))]
 		self.play: list[Step] = []
 		logger.info("Set up Executor")
 
@@ -36,19 +34,17 @@ class Step:
 class FitStep(Step):
 	def __str__(self) -> str:
 		assert self.actor is not None
-		return "Peer {} training".format(self.actor.num)
+		return "Peer {} training".format(self.actor.id)
 
 	def Exec(self, e: Executor):
 		assert self.actor is not None
-		upds = self.actor.Fit()
-		for u in upds:
-			e.updates[self.actor.num].append(u)
+		self.actor.Fit()
 
-class ApplyStep(Step):
+class CommunicateStep(Step):
 	source: int
 	start: int = 0
-	stop: int = config.EPOCHS
-	
+	stop: int = peer.EPOCHS
+
 	def __init__(self, actor: peer.Peer | None, source: int, start: int, stop: int):
 		assert actor is not None
 		assert start is not None
@@ -63,7 +59,7 @@ class ApplyStep(Step):
 	def __str__(self) -> str:
 		assert self.actor is not None
 		return "Peer {} applying update range [{}, {}) from peer {}".format(
-			self.actor.num,
+			self.actor.id,
 			self.start,
 			self.stop,
 			self.source
@@ -71,33 +67,27 @@ class ApplyStep(Step):
 
 	def Exec(self, e: Executor):
 		assert self.actor is not None
-		start = self.start if self.start >= 0 else self.actor.clock[self.source]
-		stop = min(self.stop, len(e.updates[self.source]))
-		for i in range(start, stop):
-			self.actor.Apply(
-				e.updates[self.source][i]
-			)
+
 
 class ClockStep(Step):
 	def __init__(self):
 		return
 
 	def __str__(self) -> str:
-		return "Printing peer clocks."
+		return "Printing peer times."
 
 	def Exec(self, e: Executor):
 		for p in e.peers:
-			logger.info("Peer {} has clock {}".format(p.num, p.clock))
+			logger.info("Peer {} has time {}".format(p.id, p.time))
 		return
 
 class EvalStep(Step):
 	def __str__(self) -> str:
 		assert self.actor is not None
-		return "Evaluating Peer {} with clock {}".format(self.actor.num, self.actor.clock)
+		return "Evaluating Peer {} with time {}".format(self.actor.id, self.actor.time)
 
 	def Exec(self, e: Executor):
 		assert self.actor is not None
-		print("Peer {} - clock {} -".format(self.actor.num, self.actor.clock), end=' ')
 		self.actor.Eval()
 
 def Parse(file: str, e: Executor):
@@ -118,10 +108,10 @@ def Parse(file: str, e: Executor):
 				src = int(row['source'])
 				start = int(row['start']) if (row['start'] != '' and row['start'] != None) else 0
 				stop = int(row['stop']) if (row['stop'] != '' and row['stop'] != None) else 0
-				s = ApplyStep(p, src, start, stop)
+				s = CommunicateStep(p, src, start, stop)
 			elif row['action'] == 'eval':
 				s = EvalStep(p)
-			elif row['action'] == 'clocks':
+			elif row['action'] == 'times':
 				s = ClockStep()
 			elif row['action'] == 'skip':
 				continue

@@ -11,10 +11,10 @@ class Update:
 	weights: Tensor
 	bias: Tensor
 
-	def __init__(self, t: int, g: Tensor, s: Tensor, c: int):
+	def __init__(self, t: int, w: Tensor, b: Tensor):
 		self.time = t
-		self.weights = g
-		self.bias = s
+		self.weights = w
+		self.bias = b
 
 class Data:
 	x_train: ndarray

@@ -10,6 +10,7 @@ class Peer:
 	id: int
 	data: structs.Data
 	time: int
+	neighbours: list[Peer]
 	model: tf.keras.Model
 	rng: dict[str, np.random.Generator]
 	epoch: Callable[[np.ndarray, np.ndarray], None]
@@ -24,6 +25,7 @@ class Peer:
 			'x': np.random.default_rng(seed=42),
 			'y': np.random.default_rng(seed=42)
 		}
+		self.neighbours = []
 		# self.logger = logging.getLogger('peer') # TODO: add logging
 
 		def epoch(x: np.ndarray, y: np.ndarray):
@@ -38,10 +40,20 @@ class Peer:
 
 					# Compute gradients
 					gradients = tape.gradient(loss, trainable_vars)
-					self.model.optimizer.apply_gradients(zip(gradients, trainable_vars))
+					self.model.optimizer
+						.apply_gradients(zip(gradients, trainable_vars)) # type: ignore
 			train(x_shuf, y_shuf)
-
 		self.epoch = epoch
+
+	def Communicate(self):
+		u = structs.Update(
+			self.time,
+			self.model.get_weights(),
+			tf.zeros_like(self.model.get_weights())
+		)
+		for n in self.neighbours:
+			# self.logger.info("Peer {} sending update to {}".format(self.id, n.id))
+			n.OnReceiveModel(u)
 
 	def OnReceiveModel(self, u: structs.Update):
 		# TODO: actually apply the update
@@ -60,7 +72,12 @@ class Peer:
 
 	def Eval(self):
 		"""Runs the evaluate() fn on the local model, logging its output."""
-		metrics = self.model.evaluate(self.data.x_test, self.data.y_test, verbose=0, return_dict=True)
+		metrics = self.model.evaluate(
+			self.data.x_test,
+			self.data.y_test,
+			verbose=0,
+			return_dict=True
+		)
 		# self.logger.info("peer {}; time {}; metrics: {}".format(self.id, self.time, metrics))
 
 	# def getCallback(self) -> tf.keras.callbacks.TensorBoard:

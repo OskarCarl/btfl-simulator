@@ -1,5 +1,5 @@
 import argparse, glob
-from app import config
+from simulator import config
 
 parser = argparse.ArgumentParser(
 	description='Small simulator to train an distribute ML models in a bittorrent network.'

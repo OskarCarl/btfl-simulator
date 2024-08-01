@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras import layers
-from . import config, peer, play, dataset
+from ..peer import config, peer
+from . import play, dataset
 from . import statistics as s
 import logging
 
@@ -28,7 +29,7 @@ class App:
 		w = peers[0].model.get_weights()
 		for i in range(1, config.NUM_PEERS):
 			peers[i].model.set_weights(w)
-		
+
 		# Set up the play
 		self.e = play.Executor(peers)
 		play.Parse(playFile, self.e)
