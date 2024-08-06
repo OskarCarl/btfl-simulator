@@ -4,6 +4,8 @@ import logging
 from typing import Callable
 
 from math import ceil
+
+from tensorflow.python.ops.array_ops import Shape
 from . import config, structs
 from .pick_strategy import *
 
@@ -54,6 +56,7 @@ class Peer:
 		assert n <= config.NUM_NEIGHBOURS
 		assert self.tr is not None
 		self.swarm = self.tr.Announce(self)
+		self.swarm[self.time].remove(self.id)
 		if len(self.neighbours) == config.NUM_NEIGHBOURS:
 			self.neighbours = self.neighbours[n:]
 		new_neighbours = self.picker.Pick(self.swarm, n)
@@ -65,7 +68,7 @@ class Peer:
 		u = structs.Update(
 			self.time,
 			self.model.get_weights(),
-			tf.zeros_like(self.model.get_weights())
+			tf.zeros(shape=(1,1)) # TODO: placeholder
 		)
 		for n in self.neighbours:
 			self.logger.info("Peer {} sending update to {}".format(self.id, n.id))
@@ -75,7 +78,10 @@ class Peer:
 		assert self.tr is not None
 		self.swarm = self.tr.Announce(self)
 		# TODO: actually apply the update
-		#self.model.
+		temp = self.time * self.model.get_weights() + u.time * u.weights
+		self.model.set_weights(
+			temp / (self.time + u.time)
+		)
 		if config.RETRAIN_FACTOR > 0.0:
 			values, labels = self.data.GetRetrainSet()
 			self.epoch(values, labels)

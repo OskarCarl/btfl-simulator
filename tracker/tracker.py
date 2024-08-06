@@ -14,7 +14,7 @@ class Tracker:
 	def Announce(self, p: peer.Peer) -> dict[int, list[int]]:
 		self.s.Add(p)
 		self.logger.info("Announced {}".format(p))
-		return self.s.GetQuickList(p.time, p.id)
+		return self.s.GetQuickList()
 
 	def GetPeer(self, id: int) -> peer.Peer:
 		return self.s.Get(id)

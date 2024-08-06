@@ -34,7 +34,7 @@ clean: reset
 	rm -rf venv/
 
 reset:
-	rm logs/*.log
-	rm logs/*.done
+	rm -f logs/*.log
+	rm -f logs/*.done
 
 .PHONY: run docker-runall docker-runall-gpu tensorboard setup clean reset

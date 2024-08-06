@@ -1,33 +1,31 @@
-import peer
+import peer, copy
 
 class Swarm:
-	l: dict[int, peer.Peer]
-	q: dict[int, list[int]]
+	peerlist: dict[int, peer.Peer]
+	quicklist: dict[int, list[int]]
+	timecounters: dict[int, int]
 
 	def __init__(self) -> None:
-		self.l = {}
-		self.q = {}
+		self.peerlist = {}
+		self.quicklist = {}
+		self.timecounters = {}
 
 	def Add(self, p: peer.Peer) -> None:
-		"""Adds a peer to the swarm list.
-		"""
-		if p.id in self.l:
-			oldTime = self.l[p.id].time
-			self.q[oldTime].remove(p.id)
-			if self.q[oldTime] is None:
-				del self.q[oldTime]
-		self.l[p.id] = p
-		if not p.time in self.q:
-			self.q[p.time] = []
-		self.q[p.time].append(p.id)
+		"""Adds a peer to the swarm list."""
+		if p.id in self.peerlist:
+			oldTime = self.timecounters[p.id]
+			self.quicklist[oldTime].remove(p.id)
+			if self.quicklist[oldTime] is None:
+				del self.quicklist[oldTime]
+		self.peerlist[p.id] = p
+		self.timecounters[p.id] = p.time
+		if not p.time in self.quicklist:
+			self.quicklist[p.time] = []
+		self.quicklist[p.time].append(p.id)
 
 	def Get(self, id: int) -> peer.Peer:
-		return self.l[id]
+		return self.peerlist[id]
 
-	def GetQuickList(self, qTime: int, qId: int) -> dict[int, list[int]]:
-		"""Returns the quick look up list for the swarm without the query source peer."""
-		l = self.q
-		l[qTime] = l[qTime].remove(qId)
-		if l[qTime] is None:
-			del l[qTime]
-		return l
+	def GetQuickList(self) -> dict[int, list[int]]:
+		"""Returns the quick look up list for the swarm."""
+		return copy.deepcopy(self.quicklist)
