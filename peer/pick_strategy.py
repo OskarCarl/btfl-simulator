@@ -2,6 +2,10 @@ from random import sample, choice, shuffle
 
 class PickStrategy:
 	def Pick(self, swarm: dict[int, list[int]], n: int) -> list[int]:
+		"""
+		Picks n peers from the swarm according to the chosen strategy.
+		The caller should be removed from the list beforehand.
+		"""
 		return []
 
 class LowStrategy(PickStrategy):

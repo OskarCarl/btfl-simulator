@@ -1,57 +1,83 @@
-import argparse, glob
+import argparse, glob, logging, os
+from datetime import datetime
+
+logging.basicConfig(level=logging.INFO)
+
 from simulator import config
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 
 parser = argparse.ArgumentParser(
-	description='Small simulator to train an distribute ML models in a bittorrent network.'
+	description='Small simulator to train an distribute ML models in a BitTorrent network.'
 )
 
 parser.add_argument(
-	'-n', '--num',
-	help="The number of peers to create. ({})".format(config.NUM_PEERS),
+	'-p', '--play',
+	help="Path to the play file(s) for this simulation. Globs are supported.",
+	required=True,
+	nargs="+"
+)
+
+parser.add_argument(
+	'--numpeers',
+	help="The number of peers to create. (5)",
 	type=int,
-	default=config.NUM_PEERS
+	default=5
 )
 
 parser.add_argument(
-	'-s', '--steps',
-	help="Number of steps that can be taken per peer. Since the amount of data is fixed more stepes means smaller ones. ({})".format(config.NUM_STEPS),
+	'--numneighbours',
+	help="The number of neighbours per peer. (2)",
 	type=int,
-	default=config.NUM_STEPS
+	default=2
 )
 
 parser.add_argument(
-	'-e', '--epochs',
-	help="The number(s) of epochs per step. ({})".format([config.EPOCHS]),
-	default=[config.EPOCHS],
-	nargs='+'
-)
-
-parser.add_argument(
-	'-b', '--batchsize',
-	help="Size of the batches in an epoch. ({})".format(config.BATCHSIZE),
+	'--numrotate',
+	help="The number of neighbours a peer rotates. (2)",
 	type=int,
-	default=config.BATCHSIZE
+	default=2
 )
 
 parser.add_argument(
-	'-r', '--retrain',
-	help="Ratio of known data to use for retraining after each update apply. ({})".format(config.RETRAIN_FACTOR),
+	'--identicalweights',
+	help="If set, all peers will have the same weights. (False)",
+	action='store_true',
+	default=False
+)
+
+parser.add_argument(
+	'--steps',
+	help="Number of steps that can be taken per peer. Since the amount of data is fixed more stepes means smaller ones. (10)",
+	type=int,
+	default=10
+)
+
+parser.add_argument(
+	'--epochs',
+	help="The number of epochs per step. (7)",
+	type=int,
+	default=7,
+)
+
+parser.add_argument(
+	'--retrainfactor',
+	help="Ratio of known data to use for retraining after each update apply. (0.2)",
 	type=float,
-	default=config.RETRAIN_FACTOR
+	default=0.2
 )
 
 parser.add_argument(
-	'-a', '--learnrate',
-	help="Learning rate to use. ({})".format(config.LEARNING_RATE),
+	'--learnrate',
+	help="Learning rate to use. (0.01)",
 	type=float,
-	default=config.LEARNING_RATE
+	default=0.01
 )
 
 parser.add_argument(
-	'-f', '--file',
-	help='Data file(s) to use. (none)',
-	default=[None],
-	nargs='+'
+	'--datafile',
+	help='Data file to use. (none)',
+	type=str,
+	default=None
 )
 
 parser.add_argument(
@@ -62,38 +88,31 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-config.NUM_PEERS = args.num
-config.NUM_STEPS = args.steps
-config.BATCHSIZE = args.batchsize
-config.LEARNING_RATE = args.learnrate
-config.RETRAIN_FACTOR = args.retrain
+c = config.SimulatorConfig(
+	args.numpeers,
+	args.identicalweights,
+	config.PeerConfig(
+		args.steps,
+		args.numneighbours,
+		args.numrotate,
+		args.epochs,
+		args.learnrate,
+		0.0,
+		args.retrainfactor
+	)
+)
 
 plays: list[str] = []
 for p in args.play:
 	plays.extend(glob.iglob(p))
 plays.sort()
 print("Running plays {}".format(plays))
+if args.datafile is not None:
+	print("Using data file {}".format(args.datafile))
+print("Running with config {}".format(c))
 
-datafiles: list[str] = []
-for f in args.file:
-	if f is None:
-		datafiles.append(None)
-	else:
-		datafiles.extend(glob.iglob(f))
-datafiles.sort()
-print("Using data files {}".format(datafiles))
-
-epochs: list[int] = []
-for e in args.epochs:
-	epochs.append(int(e))
-print("Running with {} epochs.".format(epochs))
-
-print("Running with: {} peers, {} steps, {} batchsize, {} learningrate.".format(
-	config.NUM_PEERS, config.NUM_STEPS, config.BATCHSIZE, config.LEARNING_RATE))
-
-from app import main, log
 from os import path
-from contextlib import redirect_stdout
+from simulator import play
 
 def normalize(p: str) -> str:
 	if p is None:
@@ -102,24 +121,22 @@ def normalize(p: str) -> str:
 	return path.splitext(p)[0]
 
 for p in plays:
-	for f in datafiles:
-		for e in epochs:
-			print("Run {} with {} and {} epochs.".format(p, f, e))
-			config.EPOCHS = e
-			if args.logdir is not None:
-				base = path.normpath("{}/{}_{}_e{}".format(args.logdir, normalize(p), normalize(f), e))
-				if path.exists("{}.done".format(base)):
-					print("Skipping {} as it is marked done.".format(base))
-					continue
-				out = "{}.out.log".format(base)
-				info = "{}.info.log".format(base)
-				print("Saving logs to {}.{{out|info}}.log".format(base))
-				with open(out, 'w') as o:
-					with redirect_stdout(o), log.LogContextManager(info):
-						a = main.App(p, f=f)
-						a.run()
-				open("{}.done".format(base), 'x').close()
-			else:
-				a = main.App(p, f=f)
-				a.run()
-			print("Run done.")
+	print("Run {}.".format(p))
+	base = ""
+	if args.logdir is not None:
+		if not path.exists(args.logdir):
+			os.makedirs(args.logdir)
+		ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+		base = path.normpath("{}/{}_{}".format(args.logdir, ts, normalize(p)))
+		if path.exists("{}.done".format(base)):
+			print("Skipping {} as it is marked done.".format(base))
+			continue
+		print("Saving logs to {}.log".format(base))
+		logging.basicConfig(filename="{}.log".format(base), level=logging.INFO, force=True)
+
+	e = play.Setup(c, p, args.datafile)
+	e.Execute()
+
+	if args.logdir is not None:
+		open("{}.done".format(base), 'x').close()
+	print("Run done.")

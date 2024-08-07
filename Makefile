@@ -3,14 +3,13 @@ IMAGE ?= tensorflow/tensorflow:$(TAG)
 GPUNUM ?= 3
 DOCKERFLAGS ?= -it --rm -v ./:/sim -w /sim --user $(shell id -u):$(shell id -g)
 
-PLAYS ?= plays/non_iid_20_percent_lost_updates.csv plays/non_iid_all_updates_applied.csv
-DATASETS ?= datasets/*.npz
+PLAYS ?= plays/test.csv
 LOGS ?= logs/
 HYPERPARAMS ?=
-SIMFLAGS ?= -p $(PLAYS) -f $(DATASETS) -l $(LOGS) $(HYPERPARAMS)
+SIMFLAGS ?= -p $(PLAYS) -l $(LOGS) $(HYPERPARAMS)
 
-run:
-	./venv/bin/python ./main.py -p ./plays/play1.csv
+run: logs/
+	./venv/bin/python ./main.py -p ./plays/test.csv -l ./logs/
 
 docker-runall: logs/
 	docker run $(DOCKERFLAGS) $(IMAGE) python main.py $(SIMFLAGS)
@@ -30,8 +29,9 @@ venv/:
 logs/:
 	mkdir -p logs/
 
-clean: reset
+clean:
 	rm -rf venv/
+	rm -rf logs/
 
 reset:
 	rm -f logs/*.log

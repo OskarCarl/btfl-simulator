@@ -1,18 +1,19 @@
 import numpy as np
 from math import sqrt
 import numpy as np
-from . import config, peer
+from . import config
+from peer import Peer
 import logging
 
-logger = logging.getLogger('sim.statistics')
+logger = logging.getLogger('simulator.statistics')
 
-def Evaluate(peers: list[peer.Peer]):
-	for i in range(config.NUM_PEERS):
-		logger.info("Evaluating Peer {} with clock {}".format(i, peers[i].time))
+def Evaluate(peers: list[Peer]):
+	for i in range(len(peers)):
+		logger.info("Evaluating Peer {} with clock {}".format(peers[i].id, peers[i].time))
 		peers[i].Eval()
 
-def CollectWeights(peers: list[peer.Peer]) -> list[list[np.ndarray]]:
-	ws: list[list[np.ndarray]] = [[None]] * len(peers)
+def CollectWeights(peers: list[Peer]) -> list[list[np.ndarray]]:
+	ws: list[list[np.ndarray]] = [[]] * len(peers)
 	for p in peers:
 		ws[p.id] = p.model.get_weights()
 	return ws

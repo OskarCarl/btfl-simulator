@@ -1,10 +1,9 @@
 from numpy import ndarray, empty
 from tensorflow import Tensor
 import logging
-from . import config
 from random import randrange
 
-logger = logging.getLogger('sim.data')
+logger = logging.getLogger('simulator.data')
 
 class Update:
 	time: int
@@ -59,11 +58,11 @@ class Data:
 		stop = (self.stepNum + 1) * self.stepSize - 1
 		return (start, stop)
 
-	def GetRetrainSet(self) -> tuple[ndarray, ndarray]:
+	def GetRetrainSet(self, factor: float) -> tuple[ndarray, ndarray]:
 		"""Returns all datapoints available up to now.
 		"""
 		(_, stop) = self.getStartStop()
-		num = int(config.RETRAIN_FACTOR * stop)
+		num = int(factor * stop)
 		start = randrange(0, stop - num)
 		return (
 			self.x_train[start:start + num],
