@@ -18,10 +18,10 @@ class Swarm:
 			if self.quicklist[oldTime] is None:
 				del self.quicklist[oldTime]
 		self.peerlist[p.id] = p
-		self.timecounters[p.id] = p.time
-		if not p.time in self.quicklist:
-			self.quicklist[p.time] = []
-		self.quicklist[p.time].append(p.id)
+		self.timecounters[p.id] = p.age
+		if not p.age in self.quicklist:
+			self.quicklist[p.age] = []
+		self.quicklist[p.age].append(p.id)
 
 	def Get(self, id: int) -> peer.Peer:
 		return self.peerlist[id]

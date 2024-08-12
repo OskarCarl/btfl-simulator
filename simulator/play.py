@@ -74,22 +74,10 @@ class RotateStep(Step):
 		assert self.actor is not None
 		self.actor.RotateNeighbours(self.n)
 
-class ClockStep(Step):
-	def __init__(self):
-		return
-
-	def __str__(self) -> str:
-		return "Printing peer times."
-
-	def Exec(self, e: Executor):
-		for p in e.peers:
-			logger.info("Peer {} has time {}".format(p.id, p.time))
-		return
-
 class EvalStep(Step):
 	def __str__(self) -> str:
 		assert self.actor is not None
-		return "Evaluating Peer {} with time {}".format(self.actor.id, self.actor.time)
+		return "Evaluating Peer {}".format(self.actor.id)
 
 	def Exec(self, e: Executor):
 		assert self.actor is not None
@@ -117,8 +105,6 @@ def parse(file: str, e: Executor):
 				s = RotateStep(p, n)
 			elif row['action'] == 'eval':
 				s = EvalStep(p)
-			elif row['action'] == 'times':
-				s = ClockStep()
 			elif row['action'] == 'skip':
 				continue
 			else:
@@ -146,7 +132,7 @@ def Setup(conf: config.SimulatorConfig, pf: str, df: str | None) -> Executor:
 			logger.info("Distance between data sets {} and {}: {}".format(i, j, d))
 
 	if conf.WEIGHTS_IDENTICAL:
-		logger.info("Initializing weights to be idential")
+		logger.info("Initializing weights to be identical")
 		peers[0].model(peers[0].data.x_train[:2])
 		w = peers[0].model.get_weights()
 		for i in range(1, conf.NUM_PEERS):

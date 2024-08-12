@@ -9,7 +9,6 @@ logger = logging.getLogger('simulator.statistics')
 
 def Evaluate(peers: list[Peer]):
 	for i in range(len(peers)):
-		logger.info("Evaluating Peer {} with clock {}".format(peers[i].id, peers[i].time))
 		peers[i].Eval()
 
 def CollectWeights(peers: list[Peer]) -> list[list[np.ndarray]]:

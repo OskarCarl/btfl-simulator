@@ -6,14 +6,14 @@ from random import randrange
 logger = logging.getLogger('simulator.data')
 
 class Update:
-	time: int
+	age: int
 	weights: Tensor
 	bias: Tensor
 
-	def __init__(self, t: int, w: Tensor, b: Tensor):
-		self.time = t
-		self.weights = w
-		self.bias = b
+	def __init__(self, age: int, weight: Tensor, bias: Tensor):
+		self.age = age
+		self.weights = weight
+		self.bias = bias
 
 class Data:
 	x_train: ndarray

@@ -1,5 +1,6 @@
 import argparse, glob, logging, os
 from datetime import datetime
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 logging.basicConfig(level=logging.INFO)
 
