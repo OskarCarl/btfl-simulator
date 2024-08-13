@@ -137,6 +137,7 @@ for p in plays:
 
 	e = play.Setup(c, p, args.datafile)
 	e.Execute()
+	e.Finish()
 
 	if args.logdir is not None:
 		open("{}.done".format(base), 'x').close()

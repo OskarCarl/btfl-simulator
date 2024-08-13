@@ -10,7 +10,6 @@ logger = logging.getLogger('simulator.play')
 
 class Executor:
 	peers: list[peer.Peer]
-	log: logging.Logger
 
 	def __init__(self, peers: list[peer.Peer]):
 		self.peers = peers
@@ -24,6 +23,11 @@ class Executor:
 			s.Exec(self)
 			i += 1
 		print('', file=sys.stderr)
+
+	def Finish(self):
+		logger.info("Evaluating all peers")
+		for p in self.peers:
+			p.Eval()
 
 class Step:
 	actor: peer.Peer | None
@@ -66,8 +70,9 @@ class RotateStep(Step):
 
 	def __str__(self) -> str:
 		assert self.actor is not None
-		return "Peer {} rotating neighbours".format(
+		return "Peer {} rotating {} neighbours".format(
 			self.actor.id,
+			self.n
 		)
 
 	def Exec(self, e: Executor):

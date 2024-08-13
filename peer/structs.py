@@ -8,9 +8,9 @@ logger = logging.getLogger('simulator.data')
 class Update:
 	age: int
 	weights: Tensor
-	bias: Tensor
+	bias: Tensor | None # TODO: not implemented yet
 
-	def __init__(self, age: int, weight: Tensor, bias: Tensor):
+	def __init__(self, age: int, weight: Tensor, bias: Tensor | None):
 		self.age = age
 		self.weights = weight
 		self.bias = bias
@@ -21,7 +21,7 @@ class Data:
 	x_test: ndarray
 	y_test: ndarray
 	stepSize: int
-	stepNum: int
+	stop: int
 
 	def __init__(self, x_train: ndarray, y_train: ndarray, x_test: ndarray, y_test: ndarray, steps: int):
 		"""Initializes the data set. The size of each step is determined
@@ -32,38 +32,26 @@ class Data:
 		self.x_test = x_test
 		self.y_test = y_test
 		self.stepSize = int(len(x_train) / steps)
-		self.stepNum = 0
+		self.stop = self.stepSize
 
 	def GetNext(self) -> tuple[ndarray, ndarray]:
-		"""Retuns the next (up to) 3 * self.stepSize data points and labels
-		from the local data set. Consecutive calls walk through the whole
-		set in a sliding window.
-		Returns [] and logs a warning once it reaches the end.
+		"""Retuns a growing number of data points and labels from the local data set.
+		Consecutive calls walk through the whole data set, increasing by self.stepSize
+		each time.
 		If more steps are desired, their size can be adjusted indirectly
 		via _steps_ during init."""
-		(start, stop) = self.getStartStop()
-		if stop > len(self.x_train):
-			logger.warn("Data set is exhausted!")
-			return (empty(0), empty(0))
-		else:
-			logger.info("Using data set range [{}, {})".format(start, stop))
-		self.stepNum += 1
+		logger.info("Using data set range [0, {})".format(self.stop))
+		self.stop += self.stepSize
 		return (
-			self.x_train[start:stop],
-			self.y_train[start:stop]
+			self.x_train[:self.stop],
+			self.y_train[:self.stop]
 		)
-
-	def getStartStop(self) -> tuple[int, int]:
-		start = max(self.stepNum - 2, 0) * self.stepSize
-		stop = (self.stepNum + 1) * self.stepSize - 1
-		return (start, stop)
 
 	def GetRetrainSet(self, factor: float) -> tuple[ndarray, ndarray]:
 		"""Returns all datapoints available up to now.
 		"""
-		(_, stop) = self.getStartStop()
-		num = int(factor * stop)
-		start = randrange(0, stop - num)
+		num = int(factor * self.stop)
+		start = randrange(0, self.stop - num)
 		return (
 			self.x_train[start:start + num],
 			self.y_train[start:start + num]

@@ -1,7 +1,7 @@
 from random import sample, choice, shuffle
 
 class PickStrategy:
-	def Pick(self, swarm: dict[int, list[int]], n: int) -> list[int]:
+	def Pick(self, swarm: dict[int, list[int]], n: int, exclude: list[int]) -> list[int]:
 		"""
 		Picks n peers from the swarm according to the chosen strategy.
 		The caller should be removed from the list beforehand.
@@ -10,31 +10,43 @@ class PickStrategy:
 
 class LowStrategy(PickStrategy):
 	"""Picks n peers with the lowest time values."""
-	def Pick(self, swarm: dict[int, list[int]], n: int) -> list[int]:
-		picks = []
+	def Pick(self, swarm: dict[int, list[int]], n: int, exclude: list[int]) -> list[int]:
+		candidates, picks = [], []
 		ts = sorted(list(swarm.keys()))
-		for t in reversed(ts):
-			if len(picks) >= n:
+		for t in ts:
+			if len(candidates) >= 2 * n:
 				break
 			shuffle(swarm[t])
-			picks = picks + swarm[t]
+			candidates = candidates + swarm[t]
 			if t == ts[0]:
 				break
-		return picks[:min(len(picks), n)]
+		for p in candidates:
+			if p in exclude:
+				continue
+			picks.append(p)
+			if len(picks) >= n:
+				break
+		return picks
 
 class HighStrategy(PickStrategy):
 	"""Picks n peers with the highest time values."""
-	def Pick(self, swarm: dict[int, list[int]], n: int) -> list[int]:
-		picks = []
+	def Pick(self, swarm: dict[int, list[int]], n: int, exclude: list[int]) -> list[int]:
+		candidates, picks = [], []
 		ts = sorted(list(swarm.keys()))
-		for t in ts:
-			if len(picks) >= n:
+		for t in reversed(ts):
+			if len(candidates) >= 2 * n:
 				break
 			shuffle(swarm[t])
-			picks = picks + swarm[t]
-			if t == ts[-1]:
+			candidates = candidates + swarm[t]
+			if t == ts[0]:
 				break
-		return picks[:min(len(picks), n)]
+		for p in candidates:
+			if p in exclude:
+				continue
+			picks.append(p)
+			if len(picks) >= n:
+				break
+		return picks
 
 # TODO implement?
 # class RandomStrategy(PickStrategy):

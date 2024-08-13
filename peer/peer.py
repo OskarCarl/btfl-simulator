@@ -53,7 +53,7 @@ class Peer:
 		self.epoch = epoch
 
 	def __str__(self) -> str:
-		return "{{'peer': {}, 'age': {}, 'neighbours': {}}}".format(self.id, self.age, [n.id for n in self.neighbours])
+		return '{{"peer": {}, "age": {}, "neighbours": {}}}'.format(self.id, self.age, [n.id for n in self.neighbours])
 
 	def RotateNeighbours(self, n: int):
 		assert n <= self.conf.NUM_NEIGHBOURS
@@ -61,40 +61,41 @@ class Peer:
 		self.swarm = self.tr.Announce(self)
 		self.swarm[self.age].remove(self.id)
 		if len(self.neighbours) > (self.conf.NUM_NEIGHBOURS - n):
-			self.neighbours = self.neighbours[(self.conf.NUM_NEIGHBOURS - n):]
-		new_neighbours = self.picker.Pick(self.swarm, n, [n.id for n in self.neighbours]))
+			self.neighbours = self.neighbours[-(self.conf.NUM_NEIGHBOURS - n):]
+		new_neighbours = self.picker.Pick(self.swarm, n, [n.id for n in self.neighbours])
 		for n in new_neighbours:
-			self.neighbours.append(self.tr.GetPeer(n)
-		logger.info("{{'peer': {}, 'action': 'rotate', 'age': {}, 'neighbours': {}, 'new': {}}}".format(self.id, self.age, [n.id for n in self.neighbours], new_neighbours))
+			self.neighbours.append(self.tr.GetPeer(n))
+		logger.info('{{"peer": {}, "action": "rotate", "age": {}, "neighbours": {}, "new": {}}}'.format(self.id, self.age, [n.id for n in self.neighbours], new_neighbours))
 
 	def Communicate(self):
 		u = structs.Update(
 			self.age,
 			self.model.get_weights(),
-			tf.zeros(shape=(1,1)) # TODO: placeholder
+			None
 		)
-		logger.info("{{'peer': {}, 'action': 'communicate', 'age': {}, 'sending_to': {}}}".format(self.id, self.age, [n.id for n in self.neighbours]))
+		logger.info('{{"peer": {}, "action": "communicate", "age": {}, "sending_to": {}}}'.format(self.id, self.age, [n.id for n in self.neighbours]))
 		for n in self.neighbours:
 			n.OnReceiveModel(u)
 
 	def OnReceiveModel(self, u: structs.Update):
 		"""
 		Implementation following Alg. 1+2 of Hegedűs 2020 (https://doi.org/10.1016/j.jpdc.2020.10.006).
-		Currently ignores biases.
+		Biases are included in the weights tensor list.
 		"""
 		assert self.tr is not None
 
 		# Merge
 		w = self.model.get_weights()
 		for i in range(len(w)):
-			w[i] = (w[i] * max(1, self.age) + u.weights[i] * max(1, u.age)) / max(1, self.age + u.age)
+			w[i] = (w[i] * self.age + u.weights[i] * u.age) / max(1, self.age + u.age)
 		self.model.set_weights(w)
-		self.age = max(self.age, u.age)
+		self.age = max(self.age, u.age) + 1
 
 		# Update
 		if self.conf.RETRAIN_FACTOR > 0.0:
 			values, labels = self.data.GetRetrainSet(self.conf.RETRAIN_FACTOR)
-			self.epoch(values, labels)
+			for _ in range(3):
+				self.epoch(values, labels)
 
 		self.swarm = self.tr.Announce(self)
 
@@ -112,7 +113,7 @@ class Peer:
 			verbose=0,
 			return_dict=True
 		)
-		logger.info("{{'peer': {}, 'action': 'eval', 'age': {}, 'metrics': {}}}".format(self.id, self.age, metrics))
+		logger.info('{{"peer": {}, "action": "eval", "age": {}, "metrics": {}}}'.format(self.id, self.age, metrics))
 
 	# def getCallback(self) -> tf.keras.callbacks.TensorBoard:
 	# 	logpath = "logs/fit/{}-peer{}".format(
