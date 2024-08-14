@@ -8,52 +8,54 @@ import matplotlib.pyplot as plt
 
 matplotlib.use('gtk4agg')
 
-# Lists to store the extracted data
-accuracies = []
-ages = []
-line_numbers = []
-peer_receive_count = [0 for i in range(50)]
-peer_last_accuracies = [0. for i in range(50)]
+NUM_PEERS = 30
 
-# Read the log file and extract data
-with open(sys.argv[1], 'r') as file:
-	for i, line in enumerate(file):
-		# Split the line and extract the JSON part
-		parts = line.split(':', 2)
-		if len(parts) == 3:
-			try:
-				# Parse the JSON data
-				data = json.loads(parts[2].strip().replace("'", '"'))
+def extract_data(file):
+	# Accuracy, age, line number
+	all = [[], [], []]
+	# Final accuracy, age
+	final = [[0 for i in range(NUM_PEERS)], [0. for i in range(NUM_PEERS)]]
+	with open(file, 'r') as file:
+		for i, line in enumerate(file):
+			# Split the line and extract the JSON part
+			parts = line.split(':', 2)
+			if len(parts) == 3:
+				try:
+					# Parse the JSON data
+					data = json.loads(parts[2].strip().replace("'", '"'))
 
-				if data['action'] == 'eval':
-					accuracies.append(data['metrics']['accuracy'])
-					ages.append(data['age'])
-					line_numbers.append(i)
-					peer_last_accuracies[data['peer']] = data['metrics']['accuracy']
-				elif data['action'] == 'communicate':
-					# Increment receive count for each receiving peer
-					for receiving_peer in data['sending_to']:
-						peer_receive_count[receiving_peer] += 1
-			except (json.JSONDecodeError, KeyError):
-				# Skip lines that don't contain the expected JSON structure
-				continue
+					if data['action'] == 'eval':
+						all[0].append(data['metrics']['accuracy'])
+						all[1].append(data['age'])
+						all[2].append(i)
+						final[0][data['peer']] = data['metrics']['accuracy']
+						final[1][data['peer']] = data['age']
+				except (json.JSONDecodeError, KeyError):
+					# Skip lines that don't contain the expected JSON structure
+					continue
+	return (all, final)
+
+(all, final) = extract_data(sys.argv[1])
 
 # Create the plots
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
+scatter = plt.scatter(all[1], all[0], marker='o', c=all[2], cmap='viridis')
+plt.ylim(ymin=0, ymax=1)
+plt.xlabel('Age')
+plt.ylabel('Accuracy')
+# plt.title('Accuracy vs Age')
+plt.colorbar(scatter, label='Wall Time', ticks=[], aspect=50)
 
-# Customize the plot
-scatter1 = ax1.scatter(accuracies, ages, c=line_numbers, cmap='viridis')
-ax1.set_xlabel('Accuracy')
-ax1.set_ylabel('Age')
-ax1.set_title('Accuracy vs Age')
-plt.colorbar(scatter1, label='Line Number in Log File')
+# Second scatter plot: Last Accuracy vs Age as overlay
+plt.scatter(final[1], final[0], marker='.', c='k')
 
-# Second scatter plot: Last Accuracy vs Receive Count
-scatter2 = ax2.scatter(peer_receive_count, peer_last_accuracies)
-ax2.set_xlabel('Number of Received Updates')
-ax2.set_ylabel('Final Accuracy')
-ax2.set_title('Final Accuracy vs Received Updates')
+if len(sys.argv) > 2:
+	ref_all, _ = extract_data(sys.argv[2])
+	plt.plot(ref_all[1], ref_all[0], c='tab:orange')
+plt.tight_layout()
 
 # Show the plot
-plt.tight_layout()
-plt.show()
+try:
+	plt.show()
+except KeyboardInterrupt:
+	plt.close('all')
+	exit(0)
