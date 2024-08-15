@@ -14,7 +14,8 @@ def extract_data(file):
 	# Accuracy, age, line number
 	all = [[], [], []]
 	# Final accuracy, age
-	final = [[0 for i in range(NUM_PEERS)], [0. for i in range(NUM_PEERS)]]
+	final = [[0 for _ in range(NUM_PEERS)], [0. for _ in range(NUM_PEERS)]]
+	diversity = [[False for _ in range(NUM_PEERS)] for _ in range(NUM_PEERS)]
 	with open(file, 'r') as file:
 		for i, line in enumerate(file):
 			# Split the line and extract the JSON part
@@ -30,12 +31,16 @@ def extract_data(file):
 						all[2].append(i)
 						final[0][data['peer']] = data['metrics']['accuracy']
 						final[1][data['peer']] = data['age']
+					if data['action'] == 'communicate':
+						for r in data['sending_to']:
+							diversity[r][data['peer']] = True
 				except (json.JSONDecodeError, KeyError):
 					# Skip lines that don't contain the expected JSON structure
 					continue
-	return (all, final)
+	return (all, final, diversity)
 
-(all, final) = extract_data(sys.argv[1])
+(all, final, diversity) = extract_data(sys.argv[1])
+diversity_sum = [r.count(True) for r in diversity]
 
 # Create the plots
 scatter = plt.scatter(all[1], all[0], marker='o', c=all[2], cmap='viridis')
@@ -49,12 +54,13 @@ plt.colorbar(scatter, label='Wall Time', ticks=[], aspect=50)
 plt.scatter(final[1], final[0], marker='.', c='k')
 
 if len(sys.argv) > 2:
-	ref_all, _ = extract_data(sys.argv[2])
+	ref_all, _, _ = extract_data(sys.argv[2])
 	plt.plot(ref_all[1], ref_all[0], c='tab:orange')
 plt.tight_layout()
 
 # Show the plot
 try:
+	print("Diversity {}".format(diversity_sum))
 	plt.show()
 except KeyboardInterrupt:
 	plt.close('all')
