@@ -97,8 +97,6 @@ class Peer:
 			for _ in range(3):
 				self.epoch(values, labels)
 
-		self.swarm = self.tr.Announce(self)
-
 	def Fit(self, epochs=7):
 		values, labels = self.data.GetNext()
 		for _ in range(epochs):

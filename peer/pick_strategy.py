@@ -18,8 +18,6 @@ class LowStrategy(PickStrategy):
 				break
 			shuffle(swarm[t])
 			candidates = candidates + swarm[t]
-			if t == ts[0]:
-				break
 		for p in candidates:
 			if p in exclude:
 				continue
@@ -38,8 +36,6 @@ class HighStrategy(PickStrategy):
 				break
 			shuffle(swarm[t])
 			candidates = candidates + swarm[t]
-			if t == ts[0]:
-				break
 		for p in candidates:
 			if p in exclude:
 				continue

@@ -15,7 +15,7 @@ class Swarm:
 		if p.id in self.peerlist:
 			oldTime = self.timecounters[p.id]
 			self.quicklist[oldTime].remove(p.id)
-			if self.quicklist[oldTime] is None:
+			if not self.quicklist[oldTime]:
 				del self.quicklist[oldTime]
 		self.peerlist[p.id] = p
 		self.timecounters[p.id] = p.age
