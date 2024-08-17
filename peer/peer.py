@@ -61,7 +61,10 @@ class Peer:
 		self.swarm = self.tr.Announce(self)
 		self.swarm[self.age].remove(self.id)
 		if len(self.neighbours) > (self.conf.NUM_NEIGHBOURS - n):
-			self.neighbours = self.neighbours[-(self.conf.NUM_NEIGHBOURS - n):]
+			if self.conf.NUM_NEIGHBOURS == n:
+				self.neighbours = []
+			else:
+				self.neighbours = self.neighbours[-(self.conf.NUM_NEIGHBOURS - n):]
 		new_neighbours = self.picker.Pick(self.swarm, n, [n.id for n in self.neighbours])
 		for n in new_neighbours:
 			self.neighbours.append(self.tr.GetPeer(n))
