@@ -19,7 +19,7 @@ def generate_play(num_peers, num_steps, max_fits, num_rotate, reduce_randomness=
 
 	for _ in range(num_steps - num_peers):
 		peer = random.choice(peers)
-		if reduce_randomness and comm_counts[peer] > 10:
+		if reduce_randomness and comm_counts[peer] > 20:
 			actions_temp = actions + ['rotate']
 		else:
 			actions_temp = actions
@@ -37,7 +37,7 @@ def generate_play(num_peers, num_steps, max_fits, num_rotate, reduce_randomness=
 			play.append(f"{peer},fit")
 		elif action == 'rotate':
 			comm_counts[peer] = 0
-			num_rotate = random.choice([2, 3])
+			num_rotate = 2 #random.choice([2, 3])
 			play.append(f"{peer},rotate,{num_rotate}")
 		elif reduce_randomness and action == 'communicate':
 			comm_counts[peer] += 1
@@ -49,7 +49,7 @@ def generate_play(num_peers, num_steps, max_fits, num_rotate, reduce_randomness=
 
 # Generate the play
 num_peers = 30
-num_neighbors = 4
+num_neighbors = 2
 num_steps = 10000
 max_fits = 10
 
