@@ -56,19 +56,22 @@ fig.colorbar(scatter, cax=cax, label='Wall Time', ticks=[], aspect=50)
 # plt.title('Accuracy vs Age')
 
 # Zoomed inset for scenario 1
-axins = zoomed_inset_axes(ax, 5, axes_kwargs={'aspect': 1167, 'anchor': "SE"}, loc="lower right")
-by_peer = {i: {'acc': [], 'age': []} for i in range(NUM_PEERS)}
-for i in range(len(all[3])):
-	p = all[3][i]
-	by_peer[p]['acc'].append(all[0][i])
-	by_peer[p]['age'].append(all[1][i])
-for i in range(NUM_PEERS):
-	axins.plot(by_peer[i]['age'], by_peer[i]['acc'])
+# axins = zoomed_inset_axes(ax, 5, axes_kwargs={'aspect': 1167, 'anchor': "SE"}, loc="lower right")
+# # As lines per peer
+# by_peer = {i: {'acc': [], 'age': []} for i in range(NUM_PEERS)}
+# for i in range(len(all[3])):
+# 	p = all[3][i]
+# 	by_peer[p]['acc'].append(all[0][i])
+# 	by_peer[p]['age'].append(all[1][i])
+# for i in range(NUM_PEERS):
+# 	axins.plot(by_peer[i]['age'], by_peer[i]['acc'])
+# As scatter
 # axins.scatter(all[1], all[0], marker='o', c=all[2], cmap='viridis')
-axins.set_xlim(0, 700)
-axins.set_ylim(0.5, 0.8)
-axins.tick_params(size=0, labelleft=False, labelbottom=False)
-mark_inset(ax, axins, loc1=1, loc2=3, fc="none", ec="0.5")
+
+# axins.set_xlim(0, 700)
+# axins.set_ylim(0.5, 0.8)
+# axins.tick_params(size=0, labelleft=False, labelbottom=False)
+# mark_inset(ax, axins, loc1=1, loc2=3, fc="none", ec="0.5")
 
 # Zoomed inset for scenario 2
 # axins = zoomed_inset_axes(ax, 16, axes_kwargs={'aspect': 52500, 'anchor': "SE"}, loc="lower right")

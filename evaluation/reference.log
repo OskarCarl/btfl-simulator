@@ -1,0 +1,407 @@
+INFO:simulator.play:Set up Executor with config {"NUM_PEERS": 1, "WEIGHTS_IDENTICAL": false, "PEER_CONFIG": {"NUM_STEPS": 10, "NUM_NEIGHBOURS": 2, "NUM_ROTATE": 2, "EPOCHS": 7, "LEARNING_RATE": 0.01, "SGD_MOMENTUM": 0.0, "RETRAIN_FACTOR": 0.2}}
+INFO:simulator.data:Set up data object of mixed labels for peer 0 with 59999 items.
+INFO:tracker:Announced {"peer": 0, "age": 0, "neighbours": []}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 5999)
+WARNING:tensorflow:5 out of the last 5 calls to <function Peer.__init__.<locals>.epoch.<locals>.train at 0x783e9234bc40> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+WARNING:tensorflow:6 out of the last 6 calls to <function Peer.__init__.<locals>.epoch.<locals>.train at 0x783e9234bc40> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 1, "metrics": {'accuracy': 0.12800000607967377, 'loss': 2.2894139289855957}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 11998)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 2, "metrics": {'accuracy': 0.19619999825954437, 'loss': 2.2056469917297363}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 17997)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 3, "metrics": {'accuracy': 0.2799000144004822, 'loss': 2.134155035018921}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 23996)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 4, "metrics": {'accuracy': 0.3483000099658966, 'loss': 2.0695765018463135}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 29995)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 5, "metrics": {'accuracy': 0.4032000005245209, 'loss': 2.009749412536621}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 35994)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 6, "metrics": {'accuracy': 0.44690001010894775, 'loss': 1.9530326128005981}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 41993)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 7, "metrics": {'accuracy': 0.48410001397132874, 'loss': 1.8985544443130493}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 47992)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 8, "metrics": {'accuracy': 0.515999972820282, 'loss': 1.8457658290863037}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 53991)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 9, "metrics": {'accuracy': 0.5454999804496765, 'loss': 1.7942191362380981}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 59990)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 10, "metrics": {'accuracy': 0.5705000162124634, 'loss': 1.7440418004989624}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 65989)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 11, "metrics": {'accuracy': 0.5960000157356262, 'loss': 1.6952019929885864}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 71988)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 12, "metrics": {'accuracy': 0.6205999851226807, 'loss': 1.647737741470337}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 77987)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 13, "metrics": {'accuracy': 0.644599974155426, 'loss': 1.6017295122146606}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 83986)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 14, "metrics": {'accuracy': 0.6654999852180481, 'loss': 1.5572237968444824}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 89985)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 15, "metrics": {'accuracy': 0.6850000023841858, 'loss': 1.5142714977264404}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 95984)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 16, "metrics": {'accuracy': 0.7010999917984009, 'loss': 1.4728590250015259}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 101983)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 17, "metrics": {'accuracy': 0.7135000228881836, 'loss': 1.4329739809036255}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 107982)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 18, "metrics": {'accuracy': 0.7231000065803528, 'loss': 1.39467191696167}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 113981)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 19, "metrics": {'accuracy': 0.7318999767303467, 'loss': 1.357917070388794}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 119980)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 20, "metrics": {'accuracy': 0.7405999898910522, 'loss': 1.3226929903030396}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 125979)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 21, "metrics": {'accuracy': 0.7494000196456909, 'loss': 1.288970708847046}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 131978)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 22, "metrics": {'accuracy': 0.7554000020027161, 'loss': 1.256720781326294}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 137977)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 23, "metrics": {'accuracy': 0.7616000175476074, 'loss': 1.2259044647216797}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 143976)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 24, "metrics": {'accuracy': 0.7670000195503235, 'loss': 1.196473479270935}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 149975)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 25, "metrics": {'accuracy': 0.7738999724388123, 'loss': 1.1683725118637085}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 155974)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 26, "metrics": {'accuracy': 0.7795000076293945, 'loss': 1.1415380239486694}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 161973)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 27, "metrics": {'accuracy': 0.7851999998092651, 'loss': 1.1159303188323975}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 167972)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 28, "metrics": {'accuracy': 0.7890999913215637, 'loss': 1.0915017127990723}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 173971)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 29, "metrics": {'accuracy': 0.7925999760627747, 'loss': 1.0681978464126587}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 179970)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 30, "metrics": {'accuracy': 0.7967000007629395, 'loss': 1.0459682941436768}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 185969)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 31, "metrics": {'accuracy': 0.8001999855041504, 'loss': 1.0247642993927002}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 191968)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 32, "metrics": {'accuracy': 0.8029000163078308, 'loss': 1.0045280456542969}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 197967)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 33, "metrics": {'accuracy': 0.8059999942779541, 'loss': 0.9852144718170166}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 203966)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 34, "metrics": {'accuracy': 0.8072999715805054, 'loss': 0.9667770266532898}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 209965)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 35, "metrics": {'accuracy': 0.8095999956130981, 'loss': 0.9491645693778992}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 215964)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 36, "metrics": {'accuracy': 0.8119000196456909, 'loss': 0.9323329329490662}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 221963)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 37, "metrics": {'accuracy': 0.8144000172615051, 'loss': 0.9162408113479614}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 227962)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 38, "metrics": {'accuracy': 0.8165000081062317, 'loss': 0.9008480310440063}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 233961)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 39, "metrics": {'accuracy': 0.8188999891281128, 'loss': 0.8861181735992432}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 239960)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 40, "metrics": {'accuracy': 0.8209999799728394, 'loss': 0.8720116019248962}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 245959)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 41, "metrics": {'accuracy': 0.8227999806404114, 'loss': 0.8584966063499451}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 251958)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 42, "metrics": {'accuracy': 0.8251000046730042, 'loss': 0.8455397486686707}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 257957)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 43, "metrics": {'accuracy': 0.8266000151634216, 'loss': 0.8331135511398315}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 263956)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 44, "metrics": {'accuracy': 0.8288000226020813, 'loss': 0.8211888670921326}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 269955)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 45, "metrics": {'accuracy': 0.8306000232696533, 'loss': 0.8097355961799622}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 275954)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 46, "metrics": {'accuracy': 0.8324000239372253, 'loss': 0.7987303137779236}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 281953)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 47, "metrics": {'accuracy': 0.8339999914169312, 'loss': 0.7881446480751038}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 287952)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 48, "metrics": {'accuracy': 0.8349999785423279, 'loss': 0.7779601216316223}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 293951)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 49, "metrics": {'accuracy': 0.8361999988555908, 'loss': 0.7681581377983093}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 299950)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 50, "metrics": {'accuracy': 0.8370000123977661, 'loss': 0.7587175369262695}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 305949)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 51, "metrics": {'accuracy': 0.8385999798774719, 'loss': 0.7496169209480286}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 311948)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 52, "metrics": {'accuracy': 0.8396999835968018, 'loss': 0.7408396601676941}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 317947)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 53, "metrics": {'accuracy': 0.8417999744415283, 'loss': 0.7323691844940186}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 323946)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 54, "metrics": {'accuracy': 0.8431000113487244, 'loss': 0.7241926789283752}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 329945)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 55, "metrics": {'accuracy': 0.843500018119812, 'loss': 0.7162920236587524}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 335944)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 56, "metrics": {'accuracy': 0.8450999855995178, 'loss': 0.7086539268493652}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 341943)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 57, "metrics": {'accuracy': 0.8460999727249146, 'loss': 0.7012670040130615}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 347942)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 58, "metrics": {'accuracy': 0.8474000096321106, 'loss': 0.6941177248954773}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 353941)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 59, "metrics": {'accuracy': 0.8485000133514404, 'loss': 0.6871983408927917}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 359940)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 60, "metrics": {'accuracy': 0.8493000268936157, 'loss': 0.6804965138435364}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 365939)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 61, "metrics": {'accuracy': 0.8500999808311462, 'loss': 0.6740027070045471}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 371938)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 62, "metrics": {'accuracy': 0.8514999747276306, 'loss': 0.6677072644233704}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 377937)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 63, "metrics": {'accuracy': 0.8519999980926514, 'loss': 0.6616016030311584}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 383936)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 64, "metrics": {'accuracy': 0.8533999919891357, 'loss': 0.6556780934333801}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 389935)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 65, "metrics": {'accuracy': 0.8539000153541565, 'loss': 0.6499288082122803}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 395934)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 66, "metrics": {'accuracy': 0.8550000190734863, 'loss': 0.6443480253219604}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 401933)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 67, "metrics": {'accuracy': 0.8561000227928162, 'loss': 0.6389261484146118}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 407932)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 68, "metrics": {'accuracy': 0.8571000099182129, 'loss': 0.6336567997932434}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 413931)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 69, "metrics": {'accuracy': 0.8579000234603882, 'loss': 0.6285331845283508}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 419930)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 70, "metrics": {'accuracy': 0.8586999773979187, 'loss': 0.6235494017601013}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 425929)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 71, "metrics": {'accuracy': 0.8593999743461609, 'loss': 0.6186990141868591}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 431928)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 72, "metrics": {'accuracy': 0.8600999712944031, 'loss': 0.613976001739502}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 437927)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 73, "metrics": {'accuracy': 0.8605999946594238, 'loss': 0.6093760132789612}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 443926)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 74, "metrics": {'accuracy': 0.8608999848365784, 'loss': 0.6048951148986816}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 449925)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 75, "metrics": {'accuracy': 0.8616999983787537, 'loss': 0.6005284190177917}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 455924)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 76, "metrics": {'accuracy': 0.8626000285148621, 'loss': 0.5962713360786438}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 461923)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 77, "metrics": {'accuracy': 0.8632000088691711, 'loss': 0.5921194553375244}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 467922)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 78, "metrics": {'accuracy': 0.8636999726295471, 'loss': 0.5880685448646545}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 473921)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 79, "metrics": {'accuracy': 0.8640999794006348, 'loss': 0.5841171145439148}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 479920)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 80, "metrics": {'accuracy': 0.8647000193595886, 'loss': 0.5802609324455261}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 485919)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 81, "metrics": {'accuracy': 0.8654999732971191, 'loss': 0.5764951109886169}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 491918)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 82, "metrics": {'accuracy': 0.8654000163078308, 'loss': 0.5728167295455933}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 497917)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 83, "metrics": {'accuracy': 0.8658999800682068, 'loss': 0.5692235827445984}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 503916)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 84, "metrics": {'accuracy': 0.8661999702453613, 'loss': 0.5657116174697876}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 509915)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 85, "metrics": {'accuracy': 0.866599977016449, 'loss': 0.5622802972793579}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 515914)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 86, "metrics": {'accuracy': 0.8672999739646912, 'loss': 0.5589247941970825}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 521913)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 87, "metrics": {'accuracy': 0.8677999973297119, 'loss': 0.5556435585021973}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 527912)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 88, "metrics": {'accuracy': 0.8687999844551086, 'loss': 0.5524337291717529}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 533911)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 89, "metrics": {'accuracy': 0.869700014591217, 'loss': 0.5492929816246033}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 539910)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 90, "metrics": {'accuracy': 0.8698999881744385, 'loss': 0.5462194085121155}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 545909)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 91, "metrics": {'accuracy': 0.8698999881744385, 'loss': 0.5432119965553284}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 551908)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 92, "metrics": {'accuracy': 0.8709999918937683, 'loss': 0.5402681231498718}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 557907)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 93, "metrics": {'accuracy': 0.8715999722480774, 'loss': 0.5373850464820862}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 563906)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 94, "metrics": {'accuracy': 0.8725000023841858, 'loss': 0.5345600843429565}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 569905)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 95, "metrics": {'accuracy': 0.8729000091552734, 'loss': 0.5317928791046143}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 575904)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 96, "metrics": {'accuracy': 0.8736000061035156, 'loss': 0.5290807485580444}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 581903)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 97, "metrics": {'accuracy': 0.8737999796867371, 'loss': 0.5264217853546143}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 587902)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 98, "metrics": {'accuracy': 0.8741000294685364, 'loss': 0.5238149166107178}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 593901)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 99, "metrics": {'accuracy': 0.8748000264167786, 'loss': 0.5212581753730774}}
+INFO:simulator.play:Peer 0 training
+INFO:simulator.data:Using data set range [0, 599900)
+INFO:simulator.play:Evaluating Peer 0
+INFO:peer:{"peer": 0, "action": "eval", "age": 100, "metrics": {'accuracy': 0.8755000233650208, 'loss': 0.5187504291534424}}
+INFO:simulator.play:Evaluating all peers
+INFO:peer:{"peer": 0, "action": "eval", "age": 100, "metrics": {'accuracy': 0.8755000233650208, 'loss': 0.5187504291534424}}
