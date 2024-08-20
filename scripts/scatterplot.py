@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 import numpy as np
 
-matplotlib.use('gtk4agg')
+matplotlib.use('webagg')
 
 NUM_PEERS = 30
 
@@ -116,7 +116,9 @@ try:
 	corr = np.corrcoef(final[1], diversity_sum)
 	print("Age and diversity (final): {}".format(corr[0][1]))
 
+	# PDF output, no dependencies
 	plt.savefig(fname="scatter.pdf", format="pdf", dpi=300)
+	# Interactive GUI, requires tornado
 	plt.show()
 except KeyboardInterrupt:
 	plt.close('all')
